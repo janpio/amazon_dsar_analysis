@@ -58,6 +58,29 @@ function prepareForCalendar($data, $index, $dsn = null) {
     return compact('dates', 'minYear', 'maxYear', 'firstMonth', 'lastMonth');
 }
 
+function prepareForCalendar2($data, $index, $dsn = null) {
+    array_shift($data);
+
+    // get days with activity
+    $dates = [];
+    foreach($data as $line) {
+        if($dsn && $dsn != $line[0]) {
+            continue;
+        }
+        $date = extractDate2($line[$index]);
+        $dates[$date] += 1;
+    }
+    $min = min(array_keys($dates));
+    $max = max(array_keys($dates));
+
+    $minYear = substr($min, 0, 4);
+    $maxYear = substr($max, 0, 4);
+    $firstMonth = substr($min, 5, 2);
+    $lastMonth = substr($max, 5, 2);
+
+    return compact('dates', 'minYear', 'maxYear', 'firstMonth', 'lastMonth');
+}
+
 function outputCalendar($data) {
     extract($data);
         

@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <?php
 include('includes/path.php');
+include('includes/functions.php');
 
 $filename = 'Kindle/Geräte/registration.csv';
 $file = $path.'/'.$filename;
@@ -21,16 +22,6 @@ foreach($csv_array as $line) {
 }
 #echo "<pre>";
 #print_r($count);
-
-
-function extractDate($date) {
-    $months = ['', "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    # Sun May 08 09:47:24 UTC 2011
-    $year = substr($date, -4);
-    $month = str_pad(array_search(substr($date, 4, 3), $months), 2, 0, STR_PAD_LEFT);
-    $day = substr($date, 8, 2);
-    return $year.'-'.$month.'-'.$day;
-}
 
 $devices = [];
 foreach($csv_array as $line) {

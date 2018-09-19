@@ -27,3 +27,25 @@ function countUniqueValues($csv_array) {
     }
     return $count;
 }
+
+function extractDate($date) {
+    $months = ['', "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    # Sun May 08 09:47:24 UTC 2011
+    $year = substr($date, -4);
+    $month = str_pad(array_search(substr($date, 4, 3), $months), 2, 0, STR_PAD_LEFT);
+    $day = substr($date, 8, 2);
+    return $year.'-'.$month.'-'.$day;
+}
+
+function extractDate2($date) {
+    $months = ['', "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    # TueMay1021:19:28UTC2011
+    # RIGHT(C2;4)
+    # MATCH(MID(LEFT(C2;8);4;3);{"Jan";"Feb";"Mar";"Apr";"May";"Jun";"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"};0)
+    # RIGHT(LEFT(C2;8);2))
+    $year = substr($date, -4);
+    $month = str_pad(array_search(substr($date, 3, 3), $months), 2, 0, STR_PAD_LEFT);
+    $day = substr($date, 6, 2);
+    return $year.'-'.$month.'-'.$day;
+}
