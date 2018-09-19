@@ -36,3 +36,29 @@ $min = min(array_keys($dates));
 $max = max(array_keys($dates));
 echo $min;
 echo $max;
+
+
+include('includes/calendar.php');
+
+$calendarDates = getDates(substr($min, 0, 4), substr($max, 0, 4), substr($min, 5, 2), substr($max, 5, 2)); 
+$weekdays = array('Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'); ?>
+<?php foreach($calendarDates as $year => $months) { ?>
+<?php echo "<h1>$year</h1>"; ?>
+    <?php foreach($months as $month => $weeks) { ?>
+    <?php echo "<h2>$month</h2>"; ?>
+    <table>
+        <tr>
+            <th><?php echo implode('</th><th>', $weekdays); ?></th>
+        </tr>
+        <?php foreach($weeks as $week => $days){ ?>
+        <tr>
+            <?php foreach($weekdays as $day){ ?>
+            <td style="<?php if($dates[$year.'-'.$month.'-'.$days[$day]]) { echo "background-color:green;"; } ?>">
+                <?php echo isset($days[$day]) ? $days[$day] : '&nbsp'; ?>
+            </td>               
+            <?php } ?>
+        </tr>
+        <?php } ?>
+    </table>
+    <?php } ?>
+<?php } ?>
