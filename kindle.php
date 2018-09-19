@@ -1,6 +1,6 @@
 <?php
 
-include('path.php');
+include('includes/path.php');
 
 $filename = 'Kindle/Inhalte/KindleReadingActions.csv';
 $file = $path.'/'.$filename;
