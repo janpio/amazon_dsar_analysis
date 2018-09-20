@@ -31,7 +31,7 @@ foreach($csv_array as $line) {
     } else {
         $end = date('Y-m-d');
     }
-    $devices[] = ['name' => $line[2], 'start' => $start, 'end' => $end];
+    $devices[] = ['dsn' => $line[0], 'name' => $line[2], 'start' => $start, 'end' => $end];
 }
 $devices = array_map("unserialize", array_unique(array_map("serialize", $devices)));
 ?>
@@ -59,3 +59,10 @@ $devices = array_map("unserialize", array_unique(array_map("serialize", $devices
   // Create a Timeline
   var timeline = new vis.Timeline(container, items, options);
 </script>
+
+<?php
+echo "<table>";
+foreach($devices as $device) {
+    echo "<tr><td>".$device['dsn']."</td><td>".$device['name']."</td></tr>\n";
+}
+echo "</table>";
