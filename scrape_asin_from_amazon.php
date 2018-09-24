@@ -28,15 +28,11 @@ foreach($asins as $asin) {
     $url = "https://www.amazon.de/dp/".$asin;
     $amazon = @file_get_contents($url);
 
-    if ($amazon === false) {
-        echo "error :(";
-        $error = error_get_last();
-        $error = explode(': ', $error['message']);
-        $error = trim($error[2]) . PHP_EOL;        
-        $asinErrorArray[$asin] = $error;
-    } else {
+    if ($amazon !== false) {
+        
         preg_match('/\<title\>(.*)\<\/title\>/', $amazon, $matches);
         if($matches[1]) {
+            echo "success 1";
             preg_match('/(.*) eBook: (.*): Amazon.de: Kindle-Shop/', $matches[1], $matches2);
             print_r($matches2);
 
@@ -53,10 +49,43 @@ foreach($asins as $asin) {
                 exit;
             }
         }
+    } else {
+        echo "error 1 :(";
+
+        $url = "https://www.amazon.de/product-reviews/".$asin;
+        $amazon2 = @file_get_contents($url);
+    
+        if ($amazon2 !== false) {
+            
+            preg_match('/\<title\>(.*)\<\/title\>/', $amazon2, $matches);
+            if($matches[1]) {
+                echo "success 2";
+                $title = str_replace('Amazon.de:Kundenrezensionen: ', '', $matches[1]);
+                
+                preg_match('/\<a class="a-size-base a-link-normal" href="([^"]*)"\>([^\<]*)\<\/a\>/', $amazon2, $matches2);
+                if($matches2[2]) {
+                    $title .= "; ".$matches2[2];
+                }
+                $asinArray[$asin] = $title;
+            } else {
+                if(strpos($amazon, "Geben Sie die Zeichen unten ein")) {
+                    echo "Captcha!";
+                    echo str_replace('action="/errors/validateCaptcha"', 'target="_blank" action="https://amazon.de/errors/validateCaptcha"', $amazon);
+                    exit;
+                }
+            }
+
+        } else {
+            echo "error 2 :(";
+            $error = error_get_last();
+            $error = explode(': ', $error['message']);
+            $error = trim($error[2]) . PHP_EOL;        
+            $asinErrorArray[$asin] = $error;
+        }
     }
 
     $i++;
-    if($i == 50) {
+    if($i == 30) {
         break;
     }
 }
@@ -70,8 +99,10 @@ echo count($emptyAsins).' ASINs are still without content<br>';
 $asinCache = json_encode($asinArray, JSON_PRETTY_PRINT);
 file_put_contents('cache/asins.json', $asinCache);
 
-$asinErrorCache = json_encode($asinErrorArray, JSON_PRETTY_PRINT);
-file_put_contents('cache/asinErrors.json', $asinErrorCache);
+if($asinErrorArray) {
+    $asinErrorCache = json_encode($asinErrorArray, JSON_PRETTY_PRINT);
+    file_put_contents('cache/asinErrors.json', $asinErrorCache);
+}
 echo count($asinErrorArray).' now ASINs in error cache<br>';
 
 #echo $asinCache;
