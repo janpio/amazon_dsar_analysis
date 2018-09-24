@@ -28,6 +28,18 @@ function countUniqueValues($csv_array) {
     return $count;
 }
 
+function countUniqueValues2($array) {
+    $count = [];
+    foreach($array as $item) {
+        foreach($item as $key => $value) {
+            if(!$count[$key]) $count[$key] = [];
+            if(!$count[$key][$value]) $count[$key][$value] = 0;
+            $count[$key][$value] += 1;
+        }
+    }
+    return $count;
+}
+
 function extractDate($date) {
     $months = ['', "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     # Sun May 08 09:47:24 UTC 2011

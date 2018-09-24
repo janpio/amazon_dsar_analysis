@@ -21,13 +21,19 @@ foreach($files as $file) {
         'name' => $asins[$array['resource']['resourceId']],
         'acquired' => $array['rights'][0]['acquiredDate'],
         'parent' => $array['resource']['parent']['resourceId'],
+        'origin' => $array['rights'][0]['origin']['originType']
     ];    
 }
 
+$count = countUniqueValues2($items);
+#echo "<pre>";
+#print_r($count);
+#exit;
+
 echo "<table>";
-echo "<tr><td>Type</td><td>ASIN</td><td>Name</td><td>Acquired</td><td>Parent</td></tr>\n";
+echo "<tr><td>Type</td><td>ASIN</td><td>Name</td><td>Acquired</td><td>Parent</td><td>Origin</td></tr>\n";
 foreach($items as $item) {
-    echo "<tr><td>".$item['type']."</td><td>".$item['asin']."</td><td>".$item['name']."</td><td>".$item['acquired']."</td><td>".$item['parent']."</td></tr>\n";
+    echo "<tr><td>".$item['type']."</td><td>".$item['asin']."</td><td>".$item['name']."</td><td>".$item['acquired']."</td><td>".$item['parent']."</td><td>".$item['origin']."</td></tr>\n";
     if(!$asins[$item['asin']]) {
         $asins[$item['asin']] = '';
     }
