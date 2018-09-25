@@ -31,15 +31,14 @@ include('includes/calendar.php');
 <h2>All Data from all devices</h2>
 <?
 outputCalendar(prepareForCalendar2($csv_array, 2));
-exit;
 ?>
 
 <hr>
 
 <h2>Data per device:</h2>
-<?
+<?php
 $devices = getDevices();
-foreach($count['device_serial_number'] as $dsn => $foo) {
+foreach($count['DSN'] as $dsn => $foo) {
     echo "<h1>".$dsn.": ".$devices[$dsn]."</h1>";
-    outputCalendar(prepareForCalendar2($csv_array, 2, $dsn));
+    outputCalendar(prepareForCalendar2($csv_array, 2, $dsn, 3));
 }
