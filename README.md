@@ -1,6 +1,6 @@
 # amazon_dsar_analysis
 
-PHP Scripts to analyse the results of an Amazon.de "Data Subject Access Request" / "Datenauskunft"
+PHP Scripts to analyse the [results of an Amazon.de "Data Subject Access Request" / "Datenauskunft"](http://betamode.de/2018/09/18/results-of-an-amazon-de-datenauskunft/)
 
 ## Instructions
 
