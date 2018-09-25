@@ -12,9 +12,15 @@ I tweeted the resulsts of these scripts while developing them, so [have a look a
 
 ### ASIN Cache
 
-- `content.php` writes all discovered ASINs into `cache/asins.json`. 
-- Run `scrape_asin_from_amazon.php` to fill that array with scraped title + author information (30 ASINs at a time, be careful/slow or Amazon will ban/captcha you [I could scrape ~500 ASINs with no problem]).
-- Reload `content.php` to see the scraped data appear.
+There is a mechanism to scrape titel and author information to ASINs that appear in the data:
+
+- `content.php` writes all discovered ASINs into `cache/asins.json`
+- Run `scrape_asin_from_amazon.php` to fill that array with scraped title + author information 
+  - 30 ASINs at a time
+  - be careful/slow or Amazon will ban/captcha you (I could scrape ~500 ASINs with no problem)
+  - ASINs where it can't find any data or error out are written to `cache/asinErrors.json`
+  - Reloading the script will scrape the next set of ASINs, until errors and ASINs unfilled are identical
+- Reload `content.php` to see the scraped data appear
 
 ## Support
 
