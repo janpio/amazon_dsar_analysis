@@ -44,8 +44,7 @@ foreach($asins as $asin) {
             $asinArray[$asin] = $title;
         } else {
             if(strpos($amazon, "Geben Sie die Zeichen unten ein")) {
-                echo "Captcha!";
-                echo str_replace('action="/errors/validateCaptcha"', 'target="_blank" action="https://amazon.de/errors/validateCaptcha"', $amazon);
+                echo "Captcha :(";
                 exit;
             }
         }
@@ -69,8 +68,7 @@ foreach($asins as $asin) {
                 $asinArray[$asin] = $title;
             } else {
                 if(strpos($amazon, "Geben Sie die Zeichen unten ein")) {
-                    echo "Captcha!";
-                    echo str_replace('action="/errors/validateCaptcha"', 'target="_blank" action="https://amazon.de/errors/validateCaptcha"', $amazon);
+                    echo "Captcha :(";
                     exit;
                 }
             }
