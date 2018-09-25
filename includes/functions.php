@@ -32,8 +32,8 @@ function countUniqueValues2($array) {
     $count = [];
     foreach($array as $item) {
         foreach($item as $key => $value) {
-            if(!$count[$key]) $count[$key] = [];
-            if(!$count[$key][$value]) $count[$key][$value] = 0;
+            if(!isset($count[$key])) $count[$key] = [];
+            if(!isset($count[$key][$value])) $count[$key][$value] = 0;
             $count[$key][$value] += 1;
         }
     }
@@ -61,3 +61,18 @@ function extractDate2($date) {
     $day = substr($date, 6, 2);
     return $year.'-'.$month.'-'.$day;
 }
+
+function extractDate3($date) {
+    $months = ['', "Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    # 26/Jan/2017 20:03:14 UTC
+    # MID(D2;8;4)
+    # MATCH(MID(D2;4;3);{"Jan";"Feb";"Mar";"Apr";"May";"Jun";"Jul";"Aug";"Sep";"Oct";"Nov";"Dec"};0)
+    # LEFT(D2;2)
+    $year = substr($date, 7, 4);
+    $month = str_pad(array_search(substr($date, 3, 3), $months), 2, 0, STR_PAD_LEFT);
+    $day = substr($date, 0, 2);
+    #echo $year.'-'.$month.'-'.$day;
+    return $year.'-'.$month.'-'.$day;
+}
+

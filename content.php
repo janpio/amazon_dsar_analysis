@@ -20,7 +20,7 @@ foreach($files as $file) {
         'asin' => $array['resource']['resourceId'],
         'name' => $asins[$array['resource']['resourceId']],
         'acquired' => $array['rights'][0]['acquiredDate'],
-        'parent' => $array['resource']['parent']['resourceId'],
+        'parent' => (isset($array['resource']['parent'])) ? $array['resource']['parent']['resourceId'] : '',
         'origin' => $array['rights'][0]['origin']['originType']
     ];    
 }
@@ -40,7 +40,52 @@ foreach($items as $item) {
 }
 echo "</table>";
 
-print_r($asins);
+#print_r($asins);
 $asinCache = json_encode($asins, JSON_PRETTY_PRINT);
-echo $asinCache;
+#echo $asinCache;
 file_put_contents('cache/asins.json', $asinCache);
+
+echo "<hr>";
+
+include('includes/calendar.php');
+?>
+
+<h2>All "Origns"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired'));
+?>
+
+<h2>All "Purchase"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'Purchase'));
+?>
+
+<h2>All "Sample"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'Sample'));
+?>
+
+<h2>All "KindleUserGuide"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'KindleUserGuide'));
+?>
+
+<h2>All "KindleDictionary"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'KindleDictionary'));
+?>
+
+<h2>All "Sharing"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'Sharing'));
+?>
+
+<h2>All "PDocs"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'PDocs'));
+?>
+
+<h2>All "DeviceRegistration"</h2>
+<?php
+outputCalendar(prepareForCalendar3($items, 'acquired', 'DeviceRegistration'));
+?>
