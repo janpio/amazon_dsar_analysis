@@ -29,7 +29,7 @@ include('includes/calendar.php');
 <h1><?php echo $filename; ?></h1>
 
 <h2>All Data from all devices</h2>
-<?
+<?php
 outputCalendar(prepareForCalendar2($csv_array, 2));
 ?>
 

@@ -3,6 +3,7 @@
 function getDevices() {
     global $path;
     $devices = [];
+    $devices[""] = "Unknown Device";
 
     $filename = 'Kindle/Geräte/registration.csv';
     $file = $path.'/'.$filename;
@@ -22,6 +23,8 @@ function countUniqueValues($csv_array) {
     $count = [];
     foreach($csv_array as $line) {
         for ($i=0; $i < count($header); $i++) { 
+            if(!isset($count[$header[$i]])) $count[$header[$i]] = [];
+            if(!isset($count[$header[$i]][$line[$i]])) $count[$header[$i]][$line[$i]] = 0;
             $count[$header[$i]][$line[$i]] += 1;
         }
     }

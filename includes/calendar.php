@@ -41,10 +41,11 @@ function prepareForCalendar($data, $index, $dsn = null) {
     // get days with activity
     $dates = [];
     foreach($data as $line) {
-        if($dsn && $dsn != $line[0]) {
+        if($dsn !== null && $dsn != $line[0]) {
             continue;
         }
         $date = substr($line[$index], 0, 10);
+        if(!isset($dates[$date])) $dates[$date] = 0;
         $dates[$date] += 1;
     }
     $min = min(array_keys($dates));
@@ -58,16 +59,17 @@ function prepareForCalendar($data, $index, $dsn = null) {
     return compact('dates', 'minYear', 'maxYear', 'firstMonth', 'lastMonth');
 }
 
-function prepareForCalendar2($data, $index, $dsn = null) {
+function prepareForCalendar2($data, $index, $dsn = null, $dsnIndex = 0) {
     array_shift($data);
 
     // get days with activity
     $dates = [];
     foreach($data as $line) {
-        if($dsn && $dsn != $line[0]) {
+        if($dsn !== null && $dsn != $line[$dsnIndex]) {
             continue;
         }
         $date = extractDate2($line[$index]);
+        if(!isset($dates[$date])) $dates[$date] = 0;
         $dates[$date] += 1;
     }
     $min = min(array_keys($dates));

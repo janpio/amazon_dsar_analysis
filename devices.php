@@ -11,19 +11,14 @@ $csv_array = array_map('str_getcsv', file($file));
 #print_r($csv_array);
 
 // count unique values
-$header = array_shift($csv_array);
 # DeviceSerialNumber	DeviceAccountRole	AccountName	FirstTimeRegistered		LastTimeRegistered		TimeDeregistered		CustomerType	State	CurrentFirmwareVersion	DeviceModel	localTimeOffset	ipAddress	CUSTOMER_LOGIN_POOL													
 #       0                       1               2               3                       4                       5                      6
-$count = [];
-foreach($csv_array as $line) {
-    for ($i=0; $i < count($header); $i++) { 
-        $count[$header[$i]][$line[$i]] += 1;
-    }
-}
+$count = countUniqueValues($csv_array);
 #echo "<pre>";
 #print_r($count);
 
 $devices = [];
+array_shift($csv_array);
 foreach($csv_array as $line) {
     $start = extractDate($line[3]);
     if($line[5] != 'null') {
